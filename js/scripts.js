@@ -215,9 +215,7 @@ function filterNames(input) {
     }
 
 
-//    // create error message when is no search result found
-//    
-//
+    // create error message when is no search result found
 
     if (result !== '') {
         const errorMessage = document.createElement('p');
