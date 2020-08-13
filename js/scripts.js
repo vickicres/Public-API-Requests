@@ -19,9 +19,11 @@ function fetchData(url) {
 
 fetchData('https://randomuser.me/api/?results=12&nat=us')
     .then(data => {
+        changeBG();
+        changeText();
         generateProfiles(data.results);
-        generateFilter();
-        modalEvents(data.results);
+        createSearch();
+        createModalEvents(data.results);
     });
 
 
@@ -61,6 +63,14 @@ function generateProfiles(data) {
             </div>
         </div>`).join('');
     gallery.innerHTML = empolyeeLists;
+    
+   
+       
+}
+
+
+function styleCard() {
+    document.querySelectorAll('.card').style.background = 'rgb(255, 255, 255, 0.9)';
 }
 
 /*** 
@@ -109,9 +119,11 @@ function generateModal(data, index) {
 function nextPrevBtn(data, index) {
     const prevBtn = containerDiv.querySelector('.modal-prev');
     const nextBtn = containerDiv.querySelector('.modal-next');
+    
 
     prevBtn.addEventListener('click', (e) => {
         generateModal(data, index - 1)
+        
     });
 
     nextBtn.addEventListener('click', (e) => {
@@ -126,7 +138,7 @@ function nextPrevBtn(data, index) {
 ** ----------------
 ***/
 
-function modalEvents(data) {
+function createModalEvents(data) {
     const card = document.querySelectorAll('.card');
     for (let i = 0; i < card.length; i++) {
         card[i].addEventListener('click', () => {
@@ -152,20 +164,32 @@ function closeModel() {
 ** ----------------------
 ***/
 
-function generateFilter() {
-    search.innerHTML =
+function createSearch() {
+    const searchField =
         `<form action="#" method="get">
         <input type="search" id="search-input" class="search-input" placeholder="Search...">
         <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
       </form>
     `
-};
+    search.innerHTML = searchField;
 
+    // add event listener to search input
+    const searchInput = document.querySelector('#search-input');
+    searchInput.addEventListener('keyup', (e) => {
+        const searchResult = searchInput.value.toLowerCase();
+        filterNames(searchResult);
 
-// create error message
-const errorMessage = document.createElement('h1');
-errorMessage.className = 'no-results';
-errorMessage.innerHTML = 'No Match Found.';
+    });
+    
+    // add event listener to search  submit
+    const submit = document.querySelector('#search-submit');
+    submit.addEventListener('click', (e) => {
+       e.preventDefault();
+        filterNames(searchResult);
+
+    });
+}
+
 
 /***
 ** ---------------
@@ -173,37 +197,54 @@ errorMessage.innerHTML = 'No Match Found.';
 ** ---------------
 ***/
 
-function filterUser(data) {
-    const searchResults = [];
-    const searchInput =  document.querySelector('#search-input');
-    const conatinerCards = document.querySelectorAll('.card');
-    
-//    for(let i = 0; i < conatinerCards.length; i += 1){
-//        const users = conatinerCards[i].lastElementChild.firstElementChild;
-//        if(users.textContent.toLowerCase().indexOf(searchInput.value.toLowerCase()) > -1) {
-//            conatinerCards[i].style.display = '';
-//        } else {
-//            conatinerCards[i].style.display = 'none';
-//            noResult.push(conatinerCards[i]);
-//        }
-//    }
-//    
-//    if (noResult.length < 12) {
-//        errorMessage.style.display = 'none';
-//    } else {
-//        errorMessage.style.display = '';
-//    }
-}
-const searchInput =  document.querySelector('#search-input');
-searchInput.addEventListener('keyup', (e) => {
-  filterUser(data);
-});
 
-const searchSubmit = document.getElementById('search-submit');
-searchSubmit.addEventListener('click', (e) => {
-    e.preventDefault();
-    filterUser(data);
-});
+// create a function to search by name
+function filterNames(input) {
+    let result = [];
+    const empolyeeCard = document.querySelectorAll('.card');
+
+    //using for loop to loop though the random empolyee cards to find the match one
+    for (let i = 0; i < empolyeeCard.length; i += 1) {
+        const name = empolyeeCard[i].querySelector('h3').textContent.toLowerCase();
+        if (name.includes(input)) {
+            empolyeeCard[i].style.display = '';
+            result ++;
+        } else {
+            empolyeeCard[i].style.display = 'none';
+        }
+    }
+
+
+//    // create error message when is no search result found
+//    
+//
+
+    if (result !== '') {
+        const errorMessage = document.createElement('p');
+        errorMessage.className = 'no-results';
+        errorMessage.style.display = 'none';
+        errorMessage.innerHTML = 'No Match Found.';
+        document.body.appendChild(errorMessage);
+
+    }
+
+}
+
+
+/***
+** ---------------------------------------
+   change background color and text color
+** ---------------------------------------
+***/
+
+function changeBG() {
+  document.body.style.background = 'rgba(173, 220, 202)';
+}
+
+function changeText() {
+    document.querySelector('h1').style.color = 'darkblue';
+    
+}
 
 
 //click anywhere outside of the container to close modal
