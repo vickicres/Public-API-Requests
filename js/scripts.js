@@ -63,9 +63,9 @@ function generateProfiles(data) {
             </div>
         </div>`).join('');
     gallery.innerHTML = empolyeeLists;
-    
-   
-       
+
+
+
 }
 
 
@@ -119,11 +119,11 @@ function generateModal(data, index) {
 function nextPrevBtn(data, index) {
     const prevBtn = containerDiv.querySelector('.modal-prev');
     const nextBtn = containerDiv.querySelector('.modal-next');
-    
+
 
     prevBtn.addEventListener('click', (e) => {
         generateModal(data, index - 1)
-        
+
     });
 
     nextBtn.addEventListener('click', (e) => {
@@ -180,16 +180,16 @@ function createSearch() {
         filterNames(searchResult);
 
     });
-    
+
     // add event listener to search  submit
     const submit = document.querySelector('#search-submit');
     submit.addEventListener('click', (e) => {
-       e.preventDefault();
-        filterNames(searchResult);
+        e.preventDefault();
+        filterNames();
 
     });
+    
 }
-
 
 /***
 ** ---------------
@@ -200,7 +200,7 @@ function createSearch() {
 
 // create a function to search by name
 function filterNames(input) {
-    let result = [];
+    const results = [];
     const empolyeeCard = document.querySelectorAll('.card');
 
     //using for loop to loop though the random empolyee cards to find the match one
@@ -208,27 +208,30 @@ function filterNames(input) {
         const name = empolyeeCard[i].querySelector('h3').textContent.toLowerCase();
         if (name.includes(input)) {
             empolyeeCard[i].style.display = '';
-            result ++;
+
         } else {
             empolyeeCard[i].style.display = 'none';
+
         }
     }
 
+    //     create error message when is no search result found 
+        /** ** conflict with regular search ** */
 
-    // create error message when is no search result found
+    let noFound = false;
+    if (results.length !== '') {
+        if(!noFound) {
+        gallery.innerHTML = '<h2 class="no-result">No Match Found</h2>';
+        const showResults = document.querySelector('.no-result');
+        showResults.style.color = '#E25A53';  
+        noFound = true;
+        }
+   
+    } 
 
-    if (result !== '') {
-        const errorMessage = document.createElement('p');
-        errorMessage.className = 'no-results';
-        errorMessage.style.display = 'none';
-        errorMessage.innerHTML = 'No Match Found.';
-        document.body.appendChild(errorMessage);
-
-    }
-
+   
 }
-
-
+ 
 /***
 ** ---------------------------------------
    change background color and text color
@@ -236,12 +239,12 @@ function filterNames(input) {
 ***/
 
 function changeBG() {
-  document.body.style.background = 'rgba(173, 220, 202)';
+    document.body.style.background = 'rgba(173, 220, 202)';
 }
 
 function changeText() {
     document.querySelector('h1').style.color = 'darkblue';
-    
+
 }
 
 
