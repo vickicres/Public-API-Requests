@@ -13,7 +13,7 @@ function fetchData(url) {
     return fetch(url)
         .then(checkStatus)
         .then(res => res.json())
-        .catch(error => console.log('Uh oh, something has gone wrong.', error))
+        .catch(error => console.log('Uh oh, something has gone wrong.', error));
 }
 
 
@@ -172,7 +172,7 @@ function createSearch() {
 
     // add event listener to search input
     const searchInput = document.querySelector('#search-input');
-    searchInput.addEventListener('keyup', (e) => {
+    searchInput.addEventListener('keyup', () => {
         const searchResult = searchInput.value.toLowerCase();
         filterNames(searchResult);
 
@@ -187,6 +187,7 @@ function createSearch() {
     });
 
 }
+
 
 /***
 ** ---------------
@@ -213,12 +214,13 @@ function filterNames(input) {
         }
     }
 
+    
     //create error message when is no search result found ***** not working properly ***
     if (noFound) {
         gallery.innerHTML = '<h2 class="no-result">No Match Found</h2>';
         const showResults = document.querySelector('.no-result');
         showResults.style.color = '#E25A53';
-    } 
+    }
 
 }
 
