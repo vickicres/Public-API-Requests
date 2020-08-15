@@ -63,9 +63,6 @@ function generateProfiles(data) {
             </div>
         </div>`).join('');
     gallery.innerHTML = empolyeeLists;
-
-
-
 }
 
 
@@ -188,7 +185,7 @@ function createSearch() {
         filterNames();
 
     });
-    
+
 }
 
 /***
@@ -200,7 +197,7 @@ function createSearch() {
 
 // create a function to search by name
 function filterNames(input) {
-    const results = [];
+    let noFound = false;
     const empolyeeCard = document.querySelectorAll('.card');
 
     //using for loop to loop though the random empolyee cards to find the match one
@@ -208,30 +205,24 @@ function filterNames(input) {
         const name = empolyeeCard[i].querySelector('h3').textContent.toLowerCase();
         if (name.includes(input)) {
             empolyeeCard[i].style.display = '';
+            noFound = false;
 
         } else {
             empolyeeCard[i].style.display = 'none';
-
+            noFound = true;
         }
     }
 
-    //     create error message when is no search result found 
-        /** ** conflict with regular search ** */
-
-    let noFound = false;
-    if (results.length !== '') {
-        if(!noFound) {
+    //create error message when is no search result found ***** not working properly ***
+    if (noFound) {
         gallery.innerHTML = '<h2 class="no-result">No Match Found</h2>';
         const showResults = document.querySelector('.no-result');
-        showResults.style.color = '#E25A53';  
-        noFound = true;
-        }
-   
+        showResults.style.color = '#E25A53';
     } 
 
-   
 }
- 
+
+
 /***
 ** ---------------------------------------
    change background color and text color
