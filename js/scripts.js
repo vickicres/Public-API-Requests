@@ -64,9 +64,9 @@ function generateProfiles(data) {
 }
 
 
-function styleCard() {
-    document.querySelectorAll('.card').style.background = 'rgb(255, 255, 255, 0.9)';
-}
+//function styleCard() {
+//    document.querySelectorAll('.card').style.background = 'rgb(255, 255, 255, 0.9)';
+//}
 
 /*** 
 ** ----------------
