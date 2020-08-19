@@ -188,11 +188,10 @@ function createSearch() {
 
 
 /***
-** ---------------
-   Event Listeners
-** ---------------
+** ----------------------------------------------------------
+   Create a search by name and add no search result function
+** ----------------------------------------------------------
 ***/
-
 
 // create a function to search by name
 function filterNames(input) {
