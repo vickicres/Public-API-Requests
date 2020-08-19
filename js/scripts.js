@@ -2,7 +2,6 @@ const body = document.querySelector('body');
 const gallery = document.getElementById('gallery');
 const search = document.querySelector('.search-container');
 
-
 /***
 ** ---------------
    Fetch API
@@ -27,11 +26,10 @@ fetchData('https://randomuser.me/api/?results=12&nat=us')
     });
 
 
-
 /***
-** ---------------
+** ----------------
    Helper functions
-** ---------------
+** ----------------
 ***/
 
 function checkStatus(response) {
@@ -108,9 +106,9 @@ function generateModal(data, index) {
 }
 
 /*** 
-** ----------------
+** ------------------------------------------------------
   Create next and prev button when the button was clicked
-** ----------------
+** ------------------------------------------------------
 ***/
 
 function nextPrevBtn(data, index) {
@@ -130,9 +128,9 @@ function nextPrevBtn(data, index) {
 }
 
 /*** 
-** ----------------
+** -------------------------------------------
   Add event listener when the card was clicked
-** ----------------
+** -------------------------------------------
 ***/
 
 function createModalEvents(data) {
@@ -145,9 +143,9 @@ function createModalEvents(data) {
 }
 
 /*** 
-** ----------------
+** -------------------
   Closed modal button
-** ----------------
+** -------------------
 ***/
 
 function closeModel() {
@@ -156,9 +154,9 @@ function closeModel() {
 }
 
 /***
-** ----------------------
+** -----------------------
    Create Search function
-** ----------------------
+** -----------------------
 ***/
 
 function createSearch() {
@@ -182,7 +180,7 @@ function createSearch() {
     const submit = document.querySelector('#search-submit');
     submit.addEventListener('click', (e) => {
         e.preventDefault();
-        filterNames();
+//        filterNames();
 
     });
 
@@ -198,32 +196,37 @@ function createSearch() {
 
 // create a function to search by name
 function filterNames(input) {
-    let noFound = false;
     const empolyeeCard = document.querySelectorAll('.card');
-
+    const foundCardsArr = [];
     //using for loop to loop though the random empolyee cards to find the match one
     for (let i = 0; i < empolyeeCard.length; i += 1) {
         const name = empolyeeCard[i].querySelector('h3').textContent.toLowerCase();
         if (name.includes(input)) {
             empolyeeCard[i].style.display = '';
-            noFound = false;
-
+            foundCardsArr.push(empolyeeCard[i]);
         } else {
             empolyeeCard[i].style.display = 'none';
-            noFound = true;
         }
     }
-
     
-    //create error message when is no search result found ***** not working properly ***
-    if (noFound) {
-        gallery.innerHTML = '<h2 class="no-result">No Match Found</h2>';
-        const showResults = document.querySelector('.no-result');
-        showResults.style.color = '#E25A53';
+    //create error message when is no search result found
+    if (foundCardsArr.length === 0) {
+        console.log(foundCardsArr);
+        let errorMessage = document.querySelector('.no-result');
+        if (!errorMessage) {
+            errorMessage = document.createElement('h2');
+            errorMessage.className = 'no-result';
+            errorMessage.innerHTML = 'No Match Found';
+            errorMessage.style.color = '#E25A53';
+            gallery.appendChild(errorMessage);
+        }
+    } else {
+        const showResult = document.querySelector('.no-result');
+        if (showResult) {
+            gallery.removeChild(showResult);
+        }
     }
-
 }
-
 
 /***
 ** ---------------------------------------
