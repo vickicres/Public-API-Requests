@@ -79,7 +79,12 @@ const containerDiv = document.createElement('div');
 function generateModal(data, index) {
 
     //formatted the birthday date
-    const dob = new Date(data[index].dob.date);
+    const date = new Date(data[index].dob.date);
+    const day = date.getDate();
+    const month = date.getMonth();
+    const year = date.getFullYear();
+    const bday = `${day}/${month}/${year}`;
+    
 
     let html = `
              <div class="modal-container">
@@ -93,7 +98,7 @@ function generateModal(data, index) {
                     <hr>
                     <p class="modal-text">${data[index].phone}</p>
                     <p class="modal-text">${data[index].location.street.number} ${data[index].location.street.name}, ${data[index].location.city}, ${data[index].location.state} ${data[index].location.postcode}</p>
-                    <p class="modal-text">Birthday ${dob.toLocaleDateString()}</p>
+                    <p class="modal-text">Birthday: ${bday}</p>
                 </div>
             </div>
             <div class="modal-btn-container">
@@ -168,10 +173,10 @@ function createSearch() {
     `
     search.innerHTML = searchField;
 
-    // add event listener to search input
+//     add event listener to search input
     const searchInput = document.querySelector('#search-input');
-    searchInput.addEventListener('keyup', () => {
-        const searchResult = searchInput.value.toLowerCase();
+    searchInput.addEventListener('keyup', (e) => {
+        const searchResult = e.target.value.toLowerCase();
         filterNames(searchResult);
 
     });
@@ -180,12 +185,12 @@ function createSearch() {
     const submit = document.querySelector('#search-submit');
     submit.addEventListener('click', (e) => {
         e.preventDefault();
-//        filterNames();
+        const searchResult = e.target.firstElementChild.value.toLowerCase();
+        filterNames(searchResult);
 
     });
 
 }
-
 
 /***
 ** ----------------------------------------------------------
