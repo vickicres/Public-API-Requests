@@ -76,10 +76,10 @@ function generateProfiles(data) {
 
 const containerDiv = document.createElement('div');
 
-function generateModal(data, index) {
+function generateModal(data, i) {
 
     //formatted the birthday date
-    const date = new Date(data[index].dob.date);
+    const date = new Date(data[i].dob.date);
     const day = date.getDate();
     const month = date.getMonth();
     const year = date.getFullYear();
@@ -91,13 +91,13 @@ function generateModal(data, index) {
             <div class="modal">
                 <button onclick="closeModel()" type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
                 <div class="modal-info-container">
-                    <img class="modal-img" src=${data[index].picture.large} alt="profile picture">
-                    <h3 id="name" class="modal-name cap">${data[index].name.first} ${data[index].name.last}</h3>
-                    <p class="modal-text">${data[index].email}</p>
-                    <p class="modal-text cap">${data[index].location.city}</p>
+                    <img class="modal-img" src=${data[i].picture.large} alt="profile picture">
+                    <h3 id="name" class="modal-name cap">${data[i].name.first} ${data[i].name.last}</h3>
+                    <p class="modal-text">${data[i].email}</p>
+                    <p class="modal-text cap">${data[i].location.city}</p>
                     <hr>
-                    <p class="modal-text">${data[index].phone}</p>
-                    <p class="modal-text">${data[index].location.street.number} ${data[index].location.street.name}, ${data[index].location.city}, ${data[index].location.state} ${data[index].location.postcode}</p>
+                    <p class="modal-text">${data[i].phone}</p>
+                    <p class="modal-text">${data[i].location.street.number} ${data[i].location.street.name}, ${data[i].location.city}, ${data[i].location.state} ${data[i].location.postcode}</p>
                     <p class="modal-text">Birthday: ${bday}</p>
                 </div>
             </div>
@@ -106,7 +106,7 @@ function generateModal(data, index) {
                 <button type="button" id="modal-next" class="modal-next btn">Next</button>
             </div>`
     containerDiv.innerHTML = html;
-    nextPrevBtn(data, index);
+    nextPrevBtn(data, i);
     return containerDiv;
 }
 
@@ -116,18 +116,18 @@ function generateModal(data, index) {
 ** ------------------------------------------------------
 ***/
 
-function nextPrevBtn(data, index) {
+function nextPrevBtn(data, i) {
     const prevBtn = containerDiv.querySelector('.modal-prev');
     const nextBtn = containerDiv.querySelector('.modal-next');
 
 
     prevBtn.addEventListener('click', (e) => {
-        generateModal(data, index - 1)
+        generateModal(data, i - 1);
 
     });
 
     nextBtn.addEventListener('click', (e) => {
-        generateModal(data, index + 1)
+        generateModal(data, i + 1);
     });
 
 }
