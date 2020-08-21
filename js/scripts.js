@@ -60,13 +60,10 @@ function generateProfiles(data) {
             <p class="card-text cap">${user.location.city}, ${user.location.state}</p>
             </div>
         </div>`).join('');
+    
     gallery.innerHTML = empolyeeLists;
 }
 
-
-//function styleCard() {
-//    document.querySelectorAll('.card').style.background = 'rgb(255, 255, 255, 0.9)';
-//}
 
 /*** 
 ** ----------------
@@ -74,22 +71,24 @@ function generateProfiles(data) {
 ** ----------------
 ***/
 
+//set the users as an empty array
+const users = [];
+
 const containerDiv = document.createElement('div');
 
 function generateModal(data, i) {
-
+    const dob = users[i];
     //formatted the birthday date
     const date = new Date(data[i].dob.date);
     const day = date.getDate();
-    const month = date.getMonth();
+    const month = date.getMonth() + 1;
     const year = date.getFullYear();
     const bday = `${day}/${month}/${year}`;
     
-
-    let html = `
-             <div class="modal-container">
+    let modalHTML = `
+            <div class="modal-container">
             <div class="modal">
-                <button onclick="closeModel()" type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
+                <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
                 <div class="modal-info-container">
                     <img class="modal-img" src=${data[i].picture.large} alt="profile picture">
                     <h3 id="name" class="modal-name cap">${data[i].name.first} ${data[i].name.last}</h3>
@@ -97,7 +96,7 @@ function generateModal(data, i) {
                     <p class="modal-text cap">${data[i].location.city}</p>
                     <hr>
                     <p class="modal-text">${data[i].phone}</p>
-                    <p class="modal-text">${data[i].location.street.number} ${data[i].location.street.name}, ${data[i].location.city}, ${data[i].location.state} ${data[i].location.postcode}</p>
+                    <p class="modal-text">${data[i].location.street.number} ${data[i].location.street.name}, ${data[i].location.city}, <br>${data[i].location.state} ${data[i].location.postcode}</p>
                     <p class="modal-text">Birthday: ${bday}</p>
                 </div>
             </div>
@@ -105,31 +104,10 @@ function generateModal(data, i) {
                 <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
                 <button type="button" id="modal-next" class="modal-next btn">Next</button>
             </div>`
-    containerDiv.innerHTML = html;
+    
+    containerDiv.innerHTML = modalHTML;
     nextPrevBtn(data, i);
     return containerDiv;
-}
-
-/*** 
-** ------------------------------------------------------
-  Create next and prev button when the button was clicked
-** ------------------------------------------------------
-***/
-
-function nextPrevBtn(data, i) {
-    const prevBtn = containerDiv.querySelector('.modal-prev');
-    const nextBtn = containerDiv.querySelector('.modal-next');
-
-
-    prevBtn.addEventListener('click', (e) => {
-        generateModal(data, i - 1);
-
-    });
-
-    nextBtn.addEventListener('click', (e) => {
-        generateModal(data, i + 1);
-    });
-
 }
 
 /*** 
@@ -147,16 +125,52 @@ function createModalEvents(data) {
     }
 }
 
+
 /*** 
-** -------------------
-  Closed modal button
-** -------------------
+** ------------------------------------------------------
+  Create next and prev button when the button was clicked
+** ------------------------------------------------------
 ***/
 
-function closeModel() {
-    const modalWindow = document.querySelector('.modal-container');
-    modalWindow.remove();
+function nextPrevBtn(data, i) {
+    const prevBtn = containerDiv.querySelector('#modal-prev');
+    const nextBtn = containerDiv.querySelector('#modal-next');
+    const modalButton = containerDiv.querySelector('.modal-close-btn');
+    const modalContainer = containerDiv.querySelector('.modal-container');
+    
+    //Closed modal button
+    modalButton.addEventListener('click', () => {
+        modalContainer.remove();
+    });
+    
+    //create clickable prev button 
+    prevBtn.addEventListener('click', () => {
+        modalContainer.remove();
+        generateModal(data, i - 1);
+
+    });
+    
+    // create clickable next button
+    nextBtn.addEventListener('click', () => {
+        modalContainer.remove();
+        generateModal(data, i + 1);
+    });
+    
+    //adding a condition to hide or show the prev or next button when the user clicked
+    
+    if (i === 0 ){
+        prevBtn.style.display = 'none';
+        nextBtn.style.display = '';
+    } else if(i === 11) {
+        prevBtn.style.display = '';
+        nextBtn.style.display = 'none';
+    } else {
+        prevBtn.style.display = '';
+        nextBtn.style.display = '';
+    }
+    
 }
+
 
 /***
 ** -----------------------
@@ -169,11 +183,10 @@ function createSearch() {
         `<form action="#" method="get">
         <input type="search" id="search-input" class="search-input" placeholder="Search...">
         <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
-      </form>
-    `
+      </form>`
     search.innerHTML = searchField;
 
-//     add event listener to search input
+    //add event listener to search input
     const searchInput = document.querySelector('#search-input');
     searchInput.addEventListener('keyup', (e) => {
         const searchResult = e.target.value.toLowerCase();

@@ -1,13 +1,13 @@
 # Techdegree-project-5
- Public API Requests
+Public API Requests
  
- Adding in error message when search is no found
+Adding in error message when search is no found
  
- Style Changes:
+Style Changes:
  
- Background Color changed in Js
+Background Color changed in Js
  
- h1 text title color style in JS
+h1 text title color style in JS
 
 Add box shadows for all the cards in CSS
 
