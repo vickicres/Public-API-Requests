@@ -156,8 +156,7 @@ function nextPrevBtn(data, i) {
         generateModal(data, i + 1);
     });
     
-    //adding a condition to hide or show the prev or next button when the user clicked
-    
+    //adding a condition to hide or show the prev or next button when the user clicked  
     if (i === 0 ){
         prevBtn.style.display = 'none';
         nextBtn.style.display = '';
