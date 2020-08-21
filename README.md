@@ -1,6 +1,6 @@
 # Techdegree-project-5
 Public API Requests
- 
+---------------------------------------------------------------------- 
 Adding in error message when search is no found
  
 Style Changes:
